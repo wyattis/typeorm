@@ -464,6 +464,17 @@ export abstract class AbstractSqliteQueryRunner
 
         // rename foreign key constraints
         newTable.foreignKeys.forEach((foreignKey) => {
+            const oldForeignKeyName =
+                this.connection.namingStrategy.foreignKeyName(
+                    oldTable,
+                    foreignKey.columnNames,
+                    this.getTablePath(foreignKey),
+                    foreignKey.referencedColumnNames,
+                )
+
+            // Skip renaming if foreign key has user defined constraint name
+            if (foreignKey.name !== oldForeignKeyName) return
+
             foreignKey.name = this.connection.namingStrategy.foreignKeyName(
                 newTable,
                 foreignKey.columnNames,
@@ -601,20 +612,35 @@ export abstract class AbstractSqliteQueryRunner
 
                 changedTable
                     .findColumnForeignKeys(changedColumnSet.oldColumn)
-                    .forEach((fk) => {
-                        fk.columnNames.splice(
-                            fk.columnNames.indexOf(
+                    .forEach((foreignKey) => {
+                        const foreignKeyName =
+                            this.connection.namingStrategy.foreignKeyName(
+                                table,
+                                foreignKey.columnNames,
+                                this.getTablePath(foreignKey),
+                                foreignKey.referencedColumnNames,
+                            )
+
+                        foreignKey.columnNames.splice(
+                            foreignKey.columnNames.indexOf(
                                 changedColumnSet.oldColumn.name,
                             ),
                             1,
                         )
-                        fk.columnNames.push(changedColumnSet.newColumn.name)
-                        fk.name = this.connection.namingStrategy.foreignKeyName(
-                            changedTable,
-                            fk.columnNames,
-                            this.getTablePath(fk),
-                            fk.referencedColumnNames,
+                        foreignKey.columnNames.push(
+                            changedColumnSet.newColumn.name,
                         )
+
+                        // rename FK only if it has default constraint name
+                        if (foreignKey.name === foreignKeyName) {
+                            foreignKey.name =
+                                this.connection.namingStrategy.foreignKeyName(
+                                    changedTable,
+                                    foreignKey.columnNames,
+                                    this.getTablePath(foreignKey),
+                                    foreignKey.referencedColumnNames,
+                                )
+                        }
                     })
 
                 changedTable
