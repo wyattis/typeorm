@@ -51,7 +51,7 @@ describe("database schema > custom constraint names > foreign key", () => {
             }),
         ))
 
-    it.only("should load constraints with custom names", () =>
+    it("should load constraints with custom names", () =>
         Promise.all(
             dataSources.map(async (dataSource) => {
                 const queryRunner = dataSource.createQueryRunner()
