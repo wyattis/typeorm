@@ -5,8 +5,8 @@ import {
     createTestingConnections,
     reloadTestingDatabases,
 } from "../../utils/test-utils"
-import { Animal } from "./entity/Animal"
 import { DataSource } from "../../../src"
+import { Animal } from "./entity/Animal"
 
 describe("github issues > #1355 Allow explicitly named primary keys, foreign keys, and indices", () => {
     let connections: DataSource[]

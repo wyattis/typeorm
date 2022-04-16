@@ -1433,11 +1433,31 @@ export abstract class AbstractSqliteQueryRunner
                     }),
                 )
 
+                // find unique constraints from CREATE TABLE sql
+                let fkResult
+                const fkMappings: {
+                    name: string
+                    columns: string[]
+                    referencedTableName: string
+                }[] = []
+                const fkRegex =
+                    /CONSTRAINT "([^"]*)" FOREIGN KEY \((.*?)\) REFERENCES "([^"]*)" /g
+                while ((fkResult = fkRegex.exec(sql)) !== null) {
+                    fkMappings.push({
+                        name: fkResult[1],
+                        columns: fkResult[2]
+                            .substr(1, fkResult[2].length - 2)
+                            .split(`", "`),
+                        referencedTableName: fkResult[3],
+                    })
+                }
+
                 // build foreign keys
                 const tableForeignKeyConstraints = OrmUtils.uniq(
                     dbForeignKeys,
                     (dbForeignKey) => dbForeignKey["id"],
                 )
+
                 table.foreignKeys = tableForeignKeyConstraints.map(
                     (foreignKey) => {
                         const ownForeignKeys = dbForeignKeys.filter(
@@ -1451,17 +1471,20 @@ export abstract class AbstractSqliteQueryRunner
                         const referencedColumnNames = ownForeignKeys.map(
                             (dbForeignKey) => dbForeignKey["to"],
                         )
-                        // build foreign key name, because we can not get it directly.
-                        const fkName =
-                            this.connection.namingStrategy.foreignKeyName(
-                                table,
-                                columnNames,
-                                foreignKey.referencedTableName,
-                                foreignKey.referencedColumnNames,
-                            )
+
+                        // find related foreign key mapping
+                        const fkMapping = fkMappings.find(
+                            (it) =>
+                                it.referencedTableName ===
+                                    foreignKey["table"] &&
+                                it.columns.every(
+                                    (column) =>
+                                        columnNames.indexOf(column) !== -1,
+                                ),
+                        )
 
                         return new TableForeignKey({
-                            name: fkName,
+                            name: fkMapping!.name,
                             columnNames: columnNames,
                             referencedTableName: foreignKey["table"],
                             referencedColumnNames: referencedColumnNames,
