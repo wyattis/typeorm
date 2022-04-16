@@ -1,9 +1,7 @@
-import {Entity, PrimaryGeneratedColumn} from "../../../../src/index";
+import { Entity, PrimaryGeneratedColumn } from "../../../../src"
 
 @Entity()
 export class Breed {
-
     @PrimaryGeneratedColumn()
-    id: number;
-
+    id: number
 }

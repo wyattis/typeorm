@@ -1,21 +1,24 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "../../../../src/index";
-import {Category} from "./Category";
-import {JoinTable} from "../../../../src/decorator/relations/JoinTable";
-import {JoinColumn} from "../../../../src/decorator/relations/JoinColumn";
-import {ManyToMany} from "../../../../src/decorator/relations/ManyToMany";
-import {ManyToOne} from "../../../../src/decorator/relations/ManyToOne";
-import {Breed} from "./Breed";
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+} from "../../../../src"
+import { Category } from "./Category"
+import { Breed } from "./Breed"
 
 @Entity()
 export class Animal {
-
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
     @Column()
-    name: string;
+    name: string
 
-    @ManyToMany(type => Category, {eager: true})
+    @ManyToMany(() => Category, { eager: true })
     @JoinTable({
         joinColumn: {
             name: "categoryId",
@@ -28,13 +31,13 @@ export class Animal {
             constraintName: "fk_animal_category_animalId",
         },
     })
-    categories: Category[];
+    categories: Category[]
 
-    @ManyToOne(type => Breed)
+    @ManyToOne(() => Breed)
     @JoinColumn({
         name: "breedId",
         referencedColumnName: "id",
         constraintName: "fk_animal_breedId",
     })
-    breed: Breed;
+    breed: Breed
 }

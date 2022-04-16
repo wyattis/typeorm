@@ -73,7 +73,7 @@ export class ForeignKeyMetadata {
     /**
      * User specified unique constraint name.
      */
-    givenName?: string;
+    givenName?: string
 
     // ---------------------------------------------------------------------
     // Constructor
@@ -88,7 +88,7 @@ export class ForeignKeyMetadata {
         onDelete?: OnDeleteType
         onUpdate?: OnUpdateType
         deferrable?: DeferrableType
-        name?: string,
+        name?: string
     }) {
         this.entityMetadata = options.entityMetadata
         this.referencedEntityMetadata = options.referencedEntityMetadata
@@ -97,7 +97,7 @@ export class ForeignKeyMetadata {
         this.onDelete = options.onDelete || "NO ACTION"
         this.onUpdate = options.onUpdate || "NO ACTION"
         this.deferrable = options.deferrable
-        this.givenName = options.name;
+        this.givenName = options.name
         if (options.namingStrategy) this.build(options.namingStrategy)
     }
 
@@ -115,11 +115,13 @@ export class ForeignKeyMetadata {
             (column) => column.databaseName,
         )
         this.referencedTablePath = this.referencedEntityMetadata.tablePath
-        this.name = this.givenName ? this.givenName : namingStrategy.foreignKeyName(
-            this.entityMetadata.tableName,
-            this.columnNames,
-            this.referencedEntityMetadata.tableName,
-            this.referencedColumnNames,
-        )
+        this.name = this.givenName
+            ? this.givenName
+            : namingStrategy.foreignKeyName(
+                  this.entityMetadata.tableName,
+                  this.columnNames,
+                  this.referencedEntityMetadata.tableName,
+                  this.referencedColumnNames,
+              )
     }
 }
