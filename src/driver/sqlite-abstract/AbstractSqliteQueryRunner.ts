@@ -451,9 +451,6 @@ export abstract class AbstractSqliteQueryRunner
         )
         await this.executeQueries(up, down)
 
-        // rename old table;
-        oldTable.name = newTable.name
-
         // rename unique constraints
         newTable.uniques.forEach((unique) => {
             unique.name = this.connection.namingStrategy.uniqueConstraintName(
@@ -491,6 +488,9 @@ export abstract class AbstractSqliteQueryRunner
                 index.where,
             )
         })
+
+        // rename old table;
+        oldTable.name = newTable.name
 
         // recreate table with new constraint names
         await this.recreateTable(newTable, oldTable)
