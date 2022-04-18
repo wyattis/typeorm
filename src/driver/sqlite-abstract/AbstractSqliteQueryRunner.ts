@@ -453,6 +453,15 @@ export abstract class AbstractSqliteQueryRunner
 
         // rename unique constraints
         newTable.uniques.forEach((unique) => {
+            const oldUniqueName =
+                this.connection.namingStrategy.uniqueConstraintName(
+                    oldTable,
+                    unique.columnNames,
+                )
+
+            // Skip renaming if Unique has user defined constraint name
+            if (unique.name !== oldUniqueName) return
+
             unique.name = this.connection.namingStrategy.uniqueConstraintName(
                 newTable,
                 unique.columnNames,
@@ -482,6 +491,15 @@ export abstract class AbstractSqliteQueryRunner
 
         // rename indices
         newTable.indices.forEach((index) => {
+            const oldIndexName = this.connection.namingStrategy.indexName(
+                oldTable,
+                index.columnNames,
+                index.where,
+            )
+
+            // Skip renaming if Index has user defined constraint name
+            if (index.name !== oldIndexName) return
+
             index.name = this.connection.namingStrategy.indexName(
                 newTable,
                 index.columnNames,
@@ -596,6 +614,12 @@ export abstract class AbstractSqliteQueryRunner
                 changedTable
                     .findColumnUniques(changedColumnSet.oldColumn)
                     .forEach((unique) => {
+                        const uniqueName =
+                            this.connection.namingStrategy.uniqueConstraintName(
+                                table,
+                                unique.columnNames,
+                            )
+
                         unique.columnNames.splice(
                             unique.columnNames.indexOf(
                                 changedColumnSet.oldColumn.name,
@@ -603,11 +627,15 @@ export abstract class AbstractSqliteQueryRunner
                             1,
                         )
                         unique.columnNames.push(changedColumnSet.newColumn.name)
-                        unique.name =
-                            this.connection.namingStrategy.uniqueConstraintName(
-                                changedTable,
-                                unique.columnNames,
-                            )
+
+                        // rename Unique only if it has default constraint name
+                        if (unique.name === uniqueName) {
+                            unique.name =
+                                this.connection.namingStrategy.uniqueConstraintName(
+                                    changedTable,
+                                    unique.columnNames,
+                                )
+                        }
                     })
 
                 changedTable
@@ -646,6 +674,13 @@ export abstract class AbstractSqliteQueryRunner
                 changedTable
                     .findColumnIndices(changedColumnSet.oldColumn)
                     .forEach((index) => {
+                        const indexName =
+                            this.connection.namingStrategy.indexName(
+                                table,
+                                index.columnNames,
+                                index.where,
+                            )
+
                         index.columnNames.splice(
                             index.columnNames.indexOf(
                                 changedColumnSet.oldColumn.name,
@@ -653,11 +688,16 @@ export abstract class AbstractSqliteQueryRunner
                             1,
                         )
                         index.columnNames.push(changedColumnSet.newColumn.name)
-                        index.name = this.connection.namingStrategy.indexName(
-                            changedTable,
-                            index.columnNames,
-                            index.where,
-                        )
+
+                        // rename Index only if it has default constraint name
+                        if (index.name === indexName) {
+                            index.name =
+                                this.connection.namingStrategy.indexName(
+                                    changedTable,
+                                    index.columnNames,
+                                    index.where,
+                                )
+                        }
                     })
             }
             const originalColumn = changedTable.columns.find(

@@ -591,6 +591,14 @@ export class MysqlQueryRunner extends BaseQueryRunner implements QueryRunner {
 
         // rename index constraints
         newTable.indices.forEach((index) => {
+            const oldIndexName = this.connection.namingStrategy.indexName(
+                oldTable,
+                index.columnNames,
+            )
+
+            // Skip renaming if Index has user defined constraint name
+            if (index.name !== oldIndexName) return
+
             // build new constraint name
             const columnNames = index.columnNames
                 .map((column) => `\`${column}\``)
@@ -998,6 +1006,15 @@ export class MysqlQueryRunner extends BaseQueryRunner implements QueryRunner {
 
                 // rename index constraints
                 clonedTable.findColumnIndices(oldColumn).forEach((index) => {
+                    const oldUniqueName =
+                        this.connection.namingStrategy.indexName(
+                            clonedTable,
+                            index.columnNames,
+                        )
+
+                    // Skip renaming if Index has user defined constraint name
+                    if (index.name !== oldUniqueName) return
+
                     // build new constraint name
                     index.columnNames.splice(
                         index.columnNames.indexOf(oldColumn.name),
