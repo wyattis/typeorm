@@ -88,7 +88,6 @@ export class JunctionEntityMetadataBuilder {
                 connection: this.connection,
                 entityMetadata: entityMetadata,
                 referencedColumn: referencedColumn,
-                constraintName: joinColumn?.constraintName,
                 args: {
                     target: "",
                     mode: "virtual",
@@ -118,6 +117,7 @@ export class JunctionEntityMetadataBuilder {
                             : referencedColumn.unsigned,
                         enum: referencedColumn.enum,
                         enumName: referencedColumn.enumName,
+                        constraintName: joinColumn?.constraintName,
                         nullable: false,
                         primary: true,
                     },
@@ -152,7 +152,6 @@ export class JunctionEntityMetadataBuilder {
                     connection: this.connection,
                     entityMetadata: entityMetadata,
                     referencedColumn: inverseReferencedColumn,
-                    constraintName: joinColumn?.constraintName,
                     args: {
                         target: "",
                         mode: "virtual",
@@ -182,6 +181,7 @@ export class JunctionEntityMetadataBuilder {
                                 : inverseReferencedColumn.unsigned,
                             enum: inverseReferencedColumn.enum,
                             enumName: inverseReferencedColumn.enumName,
+                            constraintName: joinColumn?.constraintName,
                             name: columnName,
                             nullable: false,
                             primary: true,

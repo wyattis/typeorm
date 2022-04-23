@@ -34,6 +34,7 @@ export class TableUtils {
                 ? columnMetadata.enum.map((val) => val + "")
                 : columnMetadata.enum,
             enumName: columnMetadata.enumName,
+            constraintName: columnMetadata.constraintName,
             spatialFeatureType: columnMetadata.spatialFeatureType,
             srid: columnMetadata.srid,
         }

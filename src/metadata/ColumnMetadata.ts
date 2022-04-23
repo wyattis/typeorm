@@ -280,7 +280,7 @@ export class ColumnMetadata {
     referencedColumn: ColumnMetadata | undefined
 
     /**
-     * If this column is foreign key then this specifies the name for it.
+     * If this column is foreign key or primary key then this specifies the name for it.
      */
     constraintName?: string
 
@@ -333,7 +333,6 @@ export class ColumnMetadata {
         entityMetadata: EntityMetadata
         embeddedMetadata?: EmbeddedMetadata
         referencedColumn?: ColumnMetadata
-        constraintName?: string
         args: ColumnMetadataArgs
         closureType?: "ancestor" | "descendant"
         nestedSetLeft?: boolean
@@ -343,7 +342,6 @@ export class ColumnMetadata {
         this.entityMetadata = options.entityMetadata
         this.embeddedMetadata = options.embeddedMetadata!
         this.referencedColumn = options.referencedColumn
-        this.constraintName = options.constraintName
         if (options.args.target) this.target = options.args.target
         if (options.args.propertyName)
             this.propertyName = options.args.propertyName
@@ -425,6 +423,9 @@ export class ColumnMetadata {
         }
         if (options.args.options.enumName) {
             this.enumName = options.args.options.enumName
+        }
+        if (options.args.options.constraintName) {
+            this.constraintName = options.args.options.constraintName
         }
         if (options.args.options.asExpression) {
             this.asExpression = options.args.options.asExpression
