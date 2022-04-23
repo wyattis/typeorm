@@ -63,8 +63,8 @@ export class EntityMetadataValidator {
         if (entityMetadata.primaryColumns.length > 1) {
             const areConstraintNamesEqual = entityMetadata.primaryColumns.every(
                 (columnMetadata, i, columnMetadatas) =>
-                    columnMetadata.constraintName ===
-                    columnMetadatas[0].constraintName,
+                    columnMetadata.primaryKeyConstraintName ===
+                    columnMetadatas[0].primaryKeyConstraintName,
             )
             if (!areConstraintNamesEqual) {
                 throw new TypeORMError(

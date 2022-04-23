@@ -280,9 +280,14 @@ export class ColumnMetadata {
     referencedColumn: ColumnMetadata | undefined
 
     /**
-     * If this column is foreign key or primary key then this specifies the name for it.
+     * If this column is primary key then this specifies the name for it.
      */
-    constraintName?: string
+    primaryKeyConstraintName?: string
+
+    /**
+     * If this column is foreign key then this specifies the name for it.
+     */
+    foreignKeyConstraintName?: string
 
     /**
      * Specifies a value transformer that is to be used to (un)marshal
@@ -424,8 +429,13 @@ export class ColumnMetadata {
         if (options.args.options.enumName) {
             this.enumName = options.args.options.enumName
         }
-        if (options.args.options.constraintName) {
-            this.constraintName = options.args.options.constraintName
+        if (options.args.options.primaryKeyConstraintName) {
+            this.primaryKeyConstraintName =
+                options.args.options.primaryKeyConstraintName
+        }
+        if (options.args.options.foreignKeyConstraintName) {
+            this.foreignKeyConstraintName =
+                options.args.options.foreignKeyConstraintName
         }
         if (options.args.options.asExpression) {
             this.asExpression = options.args.options.asExpression

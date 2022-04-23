@@ -29,13 +29,13 @@ describe("database schema > custom constraint names > primary key", () => {
                 let user = dataSource.getMetadata(User)
 
                 const idPK = user.primaryColumns.find(
-                    (it) => it.constraintName === "PK_ID",
+                    (it) => it.primaryKeyConstraintName === "PK_ID",
                 )
                 const namePK = post.primaryColumns.find(
-                    (it) => it.constraintName === "PK_NAME_HEADER",
+                    (it) => it.primaryKeyConstraintName === "PK_NAME_HEADER",
                 )
                 const headerPK = post.primaryColumns.find(
-                    (it) => it.constraintName === "PK_NAME_HEADER",
+                    (it) => it.primaryKeyConstraintName === "PK_NAME_HEADER",
                 )
 
                 expect(idPK).to.exist
@@ -53,13 +53,13 @@ describe("database schema > custom constraint names > primary key", () => {
                 await queryRunner.release()
 
                 const idPK = userTable!.primaryColumns.find(
-                    (it) => it.constraintName === "PK_ID",
+                    (it) => it.primaryKeyConstraintName === "PK_ID",
                 )
                 const namePK = postTable!.primaryColumns.find(
-                    (it) => it.constraintName === "PK_NAME_HEADER",
+                    (it) => it.primaryKeyConstraintName === "PK_NAME_HEADER",
                 )
                 const headerPK = postTable!.primaryColumns.find(
-                    (it) => it.constraintName === "PK_NAME_HEADER",
+                    (it) => it.primaryKeyConstraintName === "PK_NAME_HEADER",
                 )
 
                 expect(idPK).to.exist
@@ -83,13 +83,13 @@ describe("database schema > custom constraint names > primary key", () => {
                 await queryRunner.release()
 
                 const idPK = userTable!.primaryColumns.find(
-                    (it) => it.constraintName === "PK_ID",
+                    (it) => it.primaryKeyConstraintName === "PK_ID",
                 )
                 const namePK = postTable!.primaryColumns.find(
-                    (it) => it.constraintName === "PK_NAME_HEADER",
+                    (it) => it.primaryKeyConstraintName === "PK_NAME_HEADER",
                 )
                 const headerPK = postTable!.primaryColumns.find(
-                    (it) => it.constraintName === "PK_NAME_HEADER",
+                    (it) => it.primaryKeyConstraintName === "PK_NAME_HEADER",
                 )
 
                 expect(idPK).to.exist
@@ -121,10 +121,10 @@ describe("database schema > custom constraint names > primary key", () => {
                 await queryRunner.release()
 
                 const namePK = table!.primaryColumns.find(
-                    (it) => it.constraintName === "PK_NAME_HEADER",
+                    (it) => it.primaryKeyConstraintName === "PK_NAME_HEADER",
                 )
                 const headerPK = table!.primaryColumns.find(
-                    (it) => it.constraintName === "PK_NAME_HEADER",
+                    (it) => it.primaryKeyConstraintName === "PK_NAME_HEADER",
                 )
 
                 expect(namePK).to.exist

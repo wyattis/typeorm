@@ -117,9 +117,14 @@ export interface TableColumnOptions {
     enumName?: string
 
     /**
-     * Name of the primary key constraint for primary column.
+     * If this column is primary key then this specifies the name for it.
      */
-    constraintName?: string
+    primaryKeyConstraintName?: string
+
+    /**
+     * If this column is foreign key then this specifies the name for it.
+     */
+    foreignKeyConstraintName?: string
 
     /**
      * Generated column expression.

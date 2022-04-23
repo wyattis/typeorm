@@ -117,7 +117,8 @@ export class JunctionEntityMetadataBuilder {
                             : referencedColumn.unsigned,
                         enum: referencedColumn.enum,
                         enumName: referencedColumn.enumName,
-                        constraintName: joinColumn?.constraintName,
+                        foreignKeyConstraintName:
+                            joinColumn?.foreignKeyConstraintName,
                         nullable: false,
                         primary: true,
                     },
@@ -181,7 +182,8 @@ export class JunctionEntityMetadataBuilder {
                                 : inverseReferencedColumn.unsigned,
                             enum: inverseReferencedColumn.enum,
                             enumName: inverseReferencedColumn.enumName,
-                            constraintName: joinColumn?.constraintName,
+                            foreignKeyConstraintName:
+                                joinColumn?.foreignKeyConstraintName,
                             name: columnName,
                             nullable: false,
                             primary: true,
@@ -217,7 +219,7 @@ export class JunctionEntityMetadataBuilder {
                       referencedEntityMetadata: relation.entityMetadata,
                       columns: junctionColumns,
                       referencedColumns: referencedColumns,
-                      name: junctionColumns[0]?.constraintName,
+                      name: junctionColumns[0]?.foreignKeyConstraintName,
                       onDelete:
                           this.connection.driver.options.type === "spanner"
                               ? "NO ACTION"
@@ -233,7 +235,7 @@ export class JunctionEntityMetadataBuilder {
                       referencedEntityMetadata: relation.inverseEntityMetadata,
                       columns: inverseJunctionColumns,
                       referencedColumns: inverseReferencedColumns,
-                      name: inverseJunctionColumns[0]?.constraintName,
+                      name: inverseJunctionColumns[0]?.foreignKeyConstraintName,
                       onDelete:
                           this.connection.driver.options.type === "spanner"
                               ? "NO ACTION"

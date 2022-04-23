@@ -15,5 +15,5 @@ export interface PrimaryGeneratedColumnUUIDOptions {
     /**
      * Name of the primary key constraint.
      */
-    constraintName?: string
+    primaryKeyConstraintName?: string
 }

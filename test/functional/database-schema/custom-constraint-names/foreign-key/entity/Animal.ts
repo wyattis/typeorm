@@ -22,12 +22,12 @@ export class Animal {
         joinColumn: {
             name: "categoryId",
             referencedColumnName: "id",
-            constraintName: "fk_animal_category_categoryId",
+            foreignKeyConstraintName: "fk_animal_category_categoryId",
         },
         inverseJoinColumn: {
             name: "animalId",
             referencedColumnName: "id",
-            constraintName: "fk_animal_category_animalId",
+            foreignKeyConstraintName: "fk_animal_category_animalId",
         },
     })
     categories: Category[]
@@ -36,7 +36,7 @@ export class Animal {
     @JoinColumn({
         name: "breedId",
         referencedColumnName: "id",
-        constraintName: "fk_animal_breedId",
+        foreignKeyConstraintName: "fk_animal_breedId",
     })
     breed: Breed
 
@@ -44,7 +44,7 @@ export class Animal {
     @JoinColumn({
         name: "nameId",
         referencedColumnName: "id",
-        constraintName: "fk_animal_nameId",
+        foreignKeyConstraintName: "fk_animal_nameId",
     })
     name: Name
 }

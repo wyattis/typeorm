@@ -124,7 +124,7 @@ export class TableColumn {
     /**
      * Name of the primary key constraint for primary column.
      */
-    constraintName?: string
+    primaryKeyConstraintName?: string
 
     /**
      * Generated column expression.
@@ -179,7 +179,7 @@ export class TableColumn {
             this.comment = options.comment
             this.enum = options.enum
             this.enumName = options.enumName
-            this.constraintName = options.constraintName
+            this.primaryKeyConstraintName = options.primaryKeyConstraintName
             this.asExpression = options.asExpression
             this.generatedType = options.generatedType
             this.spatialFeatureType = options.spatialFeatureType
@@ -208,7 +208,7 @@ export class TableColumn {
             unsigned: this.unsigned,
             enum: this.enum,
             enumName: this.enumName,
-            constraintName: this.constraintName,
+            primaryKeyConstraintName: this.primaryKeyConstraintName,
             asExpression: this.asExpression,
             generatedType: this.generatedType,
             default: this.default,

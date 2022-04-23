@@ -26,5 +26,5 @@ export interface JoinColumnMetadataArgs {
     /**
      * Name of the foreign key constraint.
      */
-    constraintName?: string
+    foreignKeyConstraintName?: string
 }
