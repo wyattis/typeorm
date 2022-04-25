@@ -24,14 +24,14 @@ describe("github issues > #5444 EntitySchema missing support for multiple joinCo
                 propertyName: "author",
                 name: "authorPublisherId",
                 referencedColumnName: "publisherId",
-                constraintName: undefined,
+                foreignKeyConstraintName: undefined,
             },
             {
                 target: Post,
                 propertyName: "author",
                 name: "authorId",
                 referencedColumnName: "id",
-                constraintName: undefined,
+                foreignKeyConstraintName: undefined,
             },
         ])
     })
