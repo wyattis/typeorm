@@ -16,7 +16,7 @@ describe("database schema > custom constraint names > primary key", () => {
         async () =>
             (dataSources = await createTestingConnections({
                 entities: [__dirname + "/entity/*{.js,.ts}"],
-                enabledDrivers: ["postgres"],
+                enabledDrivers: ["postgres", "cockroachdb", "mssql", "oracle"],
             })),
     )
     beforeEach(() => reloadTestingDatabases(dataSources))
@@ -76,9 +76,7 @@ describe("database schema > custom constraint names > primary key", () => {
                 await queryRunner.renameTable("user", "user_renamed")
 
                 const postTable = await queryRunner.getTable("post_renamed")
-                console.log(postTable)
                 const userTable = await queryRunner.getTable("user_renamed")
-                console.log(userTable)
 
                 await queryRunner.release()
 

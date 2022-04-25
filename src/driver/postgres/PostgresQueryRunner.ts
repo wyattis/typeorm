@@ -2275,9 +2275,11 @@ export class PostgresQueryRunner
                       clonedTable,
                       clonedTable.primaryColumns.map((column) => column.name),
                   )
+
             const columnNames = clonedTable.primaryColumns
                 .map((primaryColumn) => `"${primaryColumn.name}"`)
                 .join(", ")
+
             upQueries.push(
                 new Query(
                     `ALTER TABLE ${this.escapePath(
@@ -2505,9 +2507,11 @@ export class PostgresQueryRunner
                       clonedTable,
                       primaryColumns.map((column) => column.name),
                   )
+
             const columnNamesString = primaryColumns
                 .map((column) => `"${column.name}"`)
                 .join(", ")
+
             upQueries.push(
                 new Query(
                     `ALTER TABLE ${this.escapePath(
@@ -3495,7 +3499,6 @@ export class PostgresQueryRunner
                                 (constraint) =>
                                     constraint["constraint_type"] === "PRIMARY",
                             )
-
                             if (primaryConstraint) {
                                 tableColumn.isPrimary = true
                                 // find another columns involved in primary key constraint
@@ -3961,6 +3964,7 @@ export class PostgresQueryRunner
                       table,
                       primaryColumns.map((column) => column.name),
                   )
+
             const columnNames = primaryColumns
                 .map((column) => `"${column.name}"`)
                 .join(", ")
