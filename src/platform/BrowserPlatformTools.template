@@ -163,7 +163,7 @@ interface Window {
     Buffer: any;
 }
 
-import Buffer from 'buffer'
+import { Buffer } from 'buffer'
 
 declare var window: Window;
 if (typeof window !== "undefined") {
